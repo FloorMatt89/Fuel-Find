@@ -200,19 +200,11 @@ function App() {
             <Text mt={0.5} fontSize={14}>Algorithm Time: </Text>
           </VStack>
 
-          <VStack align="start" >
+          <VStack align="start" mr={150}>
             <Text>Distance: {distance}</Text>
             <Text>Duration: {duration}</Text>
           </VStack>
-          <IconButton
-            aria-label='center back'
-            icon={<FaLocationArrow />}
-            isRound
-            onClick={() => {
-              map.panTo(center)
-              map.setZoom(15)
-            }}
-          />
+         
         </HStack>
       </Box>
     </Flex>
