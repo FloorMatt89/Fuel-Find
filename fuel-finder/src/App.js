@@ -1,3 +1,12 @@
+/**
+ * Project 3
+ * Data Structures and Algorithms
+ * Matthew Segura, Brian Borrego, Adrian Lehnhaeuser
+ *
+ * References for this file:
+ * For React UI to Display Google API: https://www.youtube.com/watch?v=iP3DnhCUIsE
+ * Github Repo for React UI:https://github.com/trulymittal/google-maps-directions-tutorial.git
+ */
 import {
   Box,
   Button,
