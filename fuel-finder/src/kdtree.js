@@ -262,33 +262,4 @@ function meterToMiles(meters){
     return meters * 0.000621371;
 }
 
-
-//generate 100000 random coordinates
-const coords = [];
-for (let i=0; i < 100000; i++){
-    coords[i] = getRandomCoordinate();
-}
-
-//create tree of coordinates
-const kdTree = new KDTree(coords);
-
-//query the nearest neighbor to a given point
-// Please enter the latitude and longitude (copy and paste coordinates) into query point
-const queryPoint = [31.624242, -82.826898];
-console.log('Query Point: ', queryPoint)
-console.log()
-
-//run respective functions and calculate running time
-console.time('Nearest N')
-const nearestNeighbor = kdTree.nearestNeighbor(queryPoint);
-console.timeEnd('Nearest N')
-
-console.time('Nearest N PQ')
-const nearestNeighborPQ = kdTree.nearestNeighborWithPriorityQueue(queryPoint);
-console.timeEnd('Nearest N PQ')
-console.log();
-
-//print out the nearest neighbor
-console.log("Nearest Neighbor Search:", nearestNeighbor);
-console.log("Nearest Neighbor Priority Q Search:", nearestNeighborPQ);
-
+module.exports = { KDTree, getRandomCoordinate, meterToMiles };
