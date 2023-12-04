@@ -196,7 +196,8 @@ function App() {
                 </MenuItem>
               </MenuList>
             </Menu>
-            <Text mt={2} size='sm'>Selected Algorithm: {selectedAlgorithm}</Text>
+            <Text mt={0.5} fontSize={14}>Selected Algorithm: {selectedAlgorithm}</Text>
+            <Text mt={0.5} fontSize={14}>Algorithm Time: </Text>
           </VStack>
 
           <VStack align="start" >
