@@ -74,13 +74,24 @@ function calculateSegment(directionsService, directionsRenderer, start, end, way
                 calculateSegment(directionsService, directionsRenderer, point, end, waypoints, initialStart, maxRange, maxRange, false);
             } else {
                 // No more points at 300 miles, display the final route
-                displayRoute(directionsService, directionsRenderer, initialStart, end, waypoints);
+                queryToGas(directionsService, directionsRenderer, initialStart, end, waypoints);
             }
         } else {
             window.alert('Directions request failed due to ' + status);
         }
     });
 }
+
+function queryToGas(directionsService, directionsRenderer, initialStart, end, waypoints) {
+    var newWaypoints = [];
+    for (let i = 0; i < waypoints.length; i++) {
+        newWaypoints.push(kdTree.nearestneighbor(waypoints[i]));
+        console.log(waypoints[i]);
+        console.log(newWaypoints[i]);
+    }
+    displayRoute(directionsService, directionsRenderer, initialStart, end, newWaypoints);
+}
+
 
 function displayRoute(directionsService, directionsRenderer, start, end, waypoints) {
     directionsService.route({
