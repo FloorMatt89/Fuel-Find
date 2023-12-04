@@ -1,15 +1,17 @@
 function initMap() {
     if (isGoogleMapsApiLoaded()) {
-        var map = new google.maps.Map(document.getElementById('map'), {
-            zoom: 7,
-            center: {lat: 40.7128, lng: -74.0060} // Example coordinates
+        loadEpolyScript(function() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 7,
+                center: {lat: 40.7128, lng: -74.0060} // Example coordinates
+            });
+
+            var directionsService = new google.maps.DirectionsService();
+            var directionsRenderer = new google.maps.DirectionsRenderer();
+            directionsRenderer.setMap(map);
+
+            calculateRoute(directionsService, directionsRenderer);
         });
-    
-        var directionsService = new google.maps.DirectionsService();
-        var directionsRenderer = new google.maps.DirectionsRenderer();
-        directionsRenderer.setMap(map);
-    
-        calculateRoute(directionsService, directionsRenderer);
     } else {
         setTimeout(initMap, 100); // Retry after 100 milliseconds
     }
