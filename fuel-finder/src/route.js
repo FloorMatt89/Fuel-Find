@@ -1,15 +1,18 @@
 function initMap() {
     if (isGoogleMapsApiLoaded()) {
-        loadEpolyScript(function() {
+        // Load epoly.js after the Google Maps API has finished loading
+        loadScript("epoly.js", function() {
+            console.log("epoly.js has been loaded");
+            // Call calculateRoute here to ensure it runs after epoly.js is loaded
             var map = new google.maps.Map(document.getElementById('map'), {
                 zoom: 7,
                 center: {lat: 40.7128, lng: -74.0060} // Example coordinates
             });
-
+        
             var directionsService = new google.maps.DirectionsService();
             var directionsRenderer = new google.maps.DirectionsRenderer();
             directionsRenderer.setMap(map);
-
+        
             calculateRoute(directionsService, directionsRenderer);
         });
     } else {
@@ -17,12 +20,28 @@ function initMap() {
     }
 }
 
-function loadEpolyScript(callback) {
-    var script = document.createElement('script');
-    script.src = 'epoly.js';
-    script.onload = callback; // Once script is loaded, execute the callback
-    document.head.appendChild(script);
+function loadScript(url, callback){
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+
+    if (script.readyState){ 
+        script.onreadystatechange = function(){
+            if (script.readyState == "loaded" ||
+                    script.readyState == "complete"){
+                script.onreadystatechange = null;
+                callback();
+            }
+        };
+    } else {  //Others
+        script.onload = function(){
+            callback();
+        };
+    }
+
+    script.src = url;
+    document.getElementsByTagName("head")[0].appendChild(script);
 }
+
 
 function calculateRoute(directionsService, directionsRenderer) {
     var origin = 'Miami, FL';
@@ -39,7 +58,8 @@ function calculateSegment(directionsService, directionsRenderer, start, end, way
     }, function(response, status) {
         if (status === 'OK') {
             var path = response.routes[0].overview_path;
-            var point = path.GetPointAtDistance(482803.2); // Get point at 300 miles
+            var polyline = new google.maps.Polyline({ path: path });
+            var point = polyline.GetPointAtDistance(482803.2); // Get point at 300 miles
 
             if (point) {
                 waypoints.push({
