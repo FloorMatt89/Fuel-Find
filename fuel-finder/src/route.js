@@ -13,7 +13,7 @@ function initMap() {
             var directionsRenderer = new google.maps.DirectionsRenderer();
             directionsRenderer.setMap(map);
         
-            calculateRoute(directionsService, directionsRenderer);
+            calculateRoute(directionsService, directionsRenderer, 'Orlando, FL', 'San Francisco, CA', 160934.4 , 482803.2, true);
         });
     } else {
         setTimeout(initMap, 100); // Retry after 100 milliseconds
@@ -43,14 +43,13 @@ function loadScript(url, callback){
 }
 
 
-function calculateRoute(directionsService, directionsRenderer) {
-    var origin = 'Miami, FL';
-    var destination = 'Chicago, IL';
-
-    calculateSegment(directionsService, directionsRenderer, origin, destination, []);
+function calculateRoute(directionsService, directionsRenderer, originPoint, destinationPoint, currRange, maxRange, firstPass) {
+    var origin = originPoint;
+    var destination = destinationPoint;
+    calculateSegment(directionsService, directionsRenderer, origin, destination, [], origin, currRange, maxRange, firstPass);
 }
 
-function calculateSegment(directionsService, directionsRenderer, start, end, waypoints) {
+function calculateSegment(directionsService, directionsRenderer, start, end, waypoints, initialStart, currRange, maxRange, firstPass) {
     directionsService.route({
         origin: start,
         destination: end,
@@ -59,7 +58,12 @@ function calculateSegment(directionsService, directionsRenderer, start, end, way
         if (status === 'OK') {
             var path = response.routes[0].overview_path;
             var polyline = new google.maps.Polyline({ path: path });
-            var point = polyline.GetPointAtDistance(482803.2); // Get point at 300 miles
+            var point;
+            if (firstPass) {
+                point = polyline.GetPointAtDistance(currRange);
+            } else {
+                point = polyline.GetPointAtDistance(maxRange);
+            }
 
             if (point) {
                 waypoints.push({
@@ -67,10 +71,10 @@ function calculateSegment(directionsService, directionsRenderer, start, end, way
                     stopover: true
                 });
                 // Recursively calculate the next segment
-                calculateSegment(directionsService, directionsRenderer, point, end, waypoints);
+                calculateSegment(directionsService, directionsRenderer, point, end, waypoints, initialStart, maxRange, maxRange, false);
             } else {
                 // No more points at 300 miles, display the final route
-                displayRoute(directionsService, directionsRenderer, start, end, waypoints);
+                displayRoute(directionsService, directionsRenderer, initialStart, end, waypoints);
             }
         } else {
             window.alert('Directions request failed due to ' + status);
