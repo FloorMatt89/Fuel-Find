@@ -59,6 +59,7 @@
 *                                                                     *
 \*********************************************************************/
 // === first support methods that don't (yet) exist in v3
+
 google.maps.LatLng.prototype.distanceFrom = function(newLatLng) {
   var EarthRadiusMeters = 6378137.0; // meters
   var lat1 = this.lat();

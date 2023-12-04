@@ -1,16 +1,26 @@
 function initMap() {
-    var map = new google.maps.Map(document.getElementById('map'), {
-        zoom: 7,
-        center: {lat: 40.7128, lng: -74.0060} // Example coordinates
-    });
-
-    var directionsService = new google.maps.DirectionsService();
-    var directionsRenderer = new google.maps.DirectionsRenderer();
-    directionsRenderer.setMap(map);
-
-    calculateRoute(directionsService, directionsRenderer);
+    if (isGoogleMapsApiLoaded()) {
+        var map = new google.maps.Map(document.getElementById('map'), {
+            zoom: 7,
+            center: {lat: 40.7128, lng: -74.0060} // Example coordinates
+        });
+    
+        var directionsService = new google.maps.DirectionsService();
+        var directionsRenderer = new google.maps.DirectionsRenderer();
+        directionsRenderer.setMap(map);
+    
+        calculateRoute(directionsService, directionsRenderer);
+    } else {
+        setTimeout(initMap, 100); // Retry after 100 milliseconds
+    }
 }
 
+function loadEpolyScript(callback) {
+    var script = document.createElement('script');
+    script.src = 'epoly.js';
+    script.onload = callback; // Once script is loaded, execute the callback
+    document.head.appendChild(script);
+}
 
 function calculateRoute(directionsService, directionsRenderer) {
     var origin = 'Miami, FL';
@@ -60,3 +70,8 @@ function displayRoute(directionsService, directionsRenderer, start, end, waypoin
         }
     });
 }
+
+function isGoogleMapsApiLoaded() {
+    return typeof google !== 'undefined' && typeof google.maps !== 'undefined';
+}
+
