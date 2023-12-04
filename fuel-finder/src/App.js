@@ -1,13 +1,27 @@
+/**
+ * Project 3
+ * Data Structures and Algorithms
+ * Matthew Segura, Brian Borrego, Adrian Lehnhaeuser
+ *
+ * References for this file:
+ * For React UI to Display Google API: https://www.youtube.com/watch?v=iP3DnhCUIsE
+ * Github Repo for React UI:https://github.com/trulymittal/google-maps-directions-tutorial.git
+ */
 import {
   Box,
   Button,
   ButtonGroup,
   Flex,
   HStack,
+  VStack,
   IconButton,
   Input,
   SkeletonText,
   Text,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
 } from '@chakra-ui/react'
 
 import { FaLocationArrow, FaTimes } from 'react-icons/fa'
@@ -20,10 +34,16 @@ const center = {lat:29.650444, lng:-82.342986}
 function App() {
   const {isLoaded} = useLoadScript({
     /*Will be pushed to github without actual key */
-    googleMapsApiKey : 'Here is where the key should be',
+    googleMapsApiKey : 'Get you own key!',
     libraries: ['places'],
 
   })
+
+  const [selectedAlgorithm, setSelectedAlgorithm] = useState('');
+
+  const handleAlgorithmSelect = (algorithm) => {
+    setSelectedAlgorithm(algorithm);
+  };
   
   const [map, setmap] = useState(/**@type google.maps.Map */(null))
   const [directionsResponse, setDirectionsResponse] = useState(null)
@@ -34,6 +54,10 @@ function App() {
   const originRef = useRef()
   /**@type React.MutableRefObject<HTMLInputElement> */
   const destinationRef = useRef()
+  /**@type React.MutableRefObject<HTMLInputElement> */
+  const currentRangeRef = useRef()
+  /**@type React.MutableRefObject<HTMLInputElement> */
+  const maxRangeRef = useRef()
 
   if(!isLoaded){
     return <SkeletonText />
@@ -84,9 +108,9 @@ function App() {
           >
            
             {/* Displaying markers or directions */}
-            <Marker position={center} />
+            {!directionsResponse && <Marker position={center} />}
             {directionsResponse && (
-            <DirectionsRenderer directions={directionsResponse} />
+              <DirectionsRenderer directions={directionsResponse} />
             )}
           </GoogleMap>
 
@@ -127,18 +151,60 @@ function App() {
             />
           </ButtonGroup>
         </HStack>
-        <HStack spacing={4} mt={4} justifyContent='space-between'>
-          <Text>Distance: {distance}</Text>
-          <Text>Duration: {duration}</Text>
-          <IconButton
-            aria-label='center back'
-            icon={<FaLocationArrow />}
-            isRound
-            onClick={() => {
-              map.panTo(center)
-              map.setZoom(15)
-            }}
-          />
+        <HStack spacing={0.5} mt={4} justifyContent='space-between'>
+        <VStack align="start">
+          <Box flexGrow={1}>
+        
+                <Input
+                  type='text'
+                  placeholder='Current Range'
+                  ref={currentRangeRef}
+                  size='sm'
+                  w='70%'
+                />
+                
+              
+            </Box>
+            <Box flexGrow={1}>
+            
+                <Input
+                  type='text'
+                  placeholder='Max Range'
+                  ref={maxRangeRef}
+                  size='sm'
+                  w='70%'
+                />
+            
+            </Box>
+          </VStack>
+          
+          <VStack align="start">
+            <Menu>
+              <MenuButton 
+                as={Button}
+                colorScheme="blue"
+                variant="outline"
+                size="sm">
+                Algorithms
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => handleAlgorithmSelect('Nearest Neighbor-Normal')}>
+                  Nearest Neighbor-Normal
+                </MenuItem>
+                <MenuItem onClick={() => handleAlgorithmSelect('Nearest Neighbor-Priority Queue')}>
+                  Nearest Neighbor-Priority Queue
+                </MenuItem>
+              </MenuList>
+            </Menu>
+            <Text mt={0.5} fontSize={14}>Selected Algorithm: {selectedAlgorithm}</Text>
+            <Text mt={0.5} fontSize={14}>Algorithm Time: </Text>
+          </VStack>
+
+          <VStack align="start" mr={150}>
+            <Text>Distance: {distance}</Text>
+            <Text>Duration: {duration}</Text>
+          </VStack>
+         
         </HStack>
       </Box>
     </Flex>
