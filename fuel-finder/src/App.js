@@ -46,7 +46,7 @@ const center = {lat:29.650444, lng:-82.342986}
 function App() {
   const {isLoaded} = useLoadScript({
     /*Will be pushed to github without actual key */
-    googleMapsApiKey : 'AIzaSyBYDrfVmz1SfEwnkdmsnX9LxCXgv_bV1rs',
+    googleMapsApiKey : 'Put your own key',
     libraries: ['places'],
 
   })
