@@ -157,7 +157,7 @@ function App() {
       
       let nearestNeighbor;
       console.log('Neighbor called');
-      if (selectedAlgorithm === 'Nearest Neighbor-Normal') {
+      if (selectedAlgorithm === 'Nearest Neighbor-Recursion') {
         console.log('pick 1');
         nearestNeighbor = kdTree.nearestNeighbor(point);
 
@@ -365,7 +365,7 @@ function App() {
               </MenuButton>
               <MenuList>
                 <MenuItem onClick={() => handleAlgorithmSelect('Nearest Neighbor-Recursion')}>
-                  Nearest Neighbor-Normal
+                  Nearest Neighbor-Recursion
                 </MenuItem>
                 <MenuItem onClick={() => handleAlgorithmSelect('Nearest Neighbor-Priority Queue')}>
                   Nearest Neighbor-Priority Queue
