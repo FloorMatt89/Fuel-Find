@@ -1,3 +1,4 @@
+//TESTING CODE FOR WAYPOINT FUNCTIONALITY
 function initMap() {
     if (isGoogleMapsApiLoaded()) {
         // Load epoly.js after the Google Maps API has finished loading
