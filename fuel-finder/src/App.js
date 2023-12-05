@@ -7,6 +7,7 @@
  * For React UI to Display Google API: https://www.youtube.com/watch?v=iP3DnhCUIsE
  * Github Repo for React UI:https://github.com/trulymittal/google-maps-directions-tutorial.git
  */
+// Added imports needed
 import {
   Box,
   Button,
@@ -32,6 +33,7 @@ import React, { useEffect } from 'react';
 import{useLoadScript, GoogleMap, Marker, Autocomplete, DirectionsRenderer,} from '@react-google-maps/api'
 import { useRef, useState } from 'react'
 
+// Initialized variables that are needed only once
 const center = {lat:29.650444, lng:-82.342986}
 
   const coords = [];
@@ -51,7 +53,7 @@ function App() {
 
   })
   
-
+  // Varibales needed throughout the app
   const [selectedAlgorithm, setSelectedAlgorithm] = useState('');
 
   const handleAlgorithmSelect = (algorithm) => {
@@ -99,7 +101,7 @@ function App() {
       
     };
   }, [isLoaded]);
-
+  
   if(!isLoaded){
     return <SkeletonText />
   }
@@ -107,7 +109,7 @@ function App() {
   
 
   
-
+  // These 4 functions needed to calculate and display route
   const calculateRoute = async () => {
     if (originRef.current.value === '' || destinationRef.current.value === '' || currentRangeRef.current.value === '' || maxRangeRef.current.value === '') {
       return;
@@ -151,6 +153,7 @@ function App() {
     setAlgorithmTime(elapsedTime);
    
   };
+  //Finds the nearest neighbor using one of the two algorithms
   const getNearestNeighbor = async (point) => {
     return new Promise((resolve) => {
      
@@ -172,7 +175,7 @@ function App() {
   };
   
   
-  
+  // Calculated Points when gas is about to run out
   const calculateSegment = (start, end, waypoints,initialStart, currRange, maxRange, firstPass ) => {
     // eslint-disable-next-line no-undef
     const directionsService = new google.maps.DirectionsService();
@@ -257,11 +260,12 @@ function App() {
       setDuration('')
       originRef.current.value = ''
       destinationRef.current.value = ''
+      
   }
 
  
 
-
+// Majority of UI is here
   return (
     <Flex
       position='relative'
