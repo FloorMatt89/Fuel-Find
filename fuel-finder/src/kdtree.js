@@ -261,5 +261,8 @@ function getRandomCoordinate() {
 function meterToMiles(meters){
     return meters * 0.000621371;
 }
+export function milesToMeters(miles){
+    return miles * 1609.34;
+}
 
 module.exports = { KDTree, getRandomCoordinate, meterToMiles };
