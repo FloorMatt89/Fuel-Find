@@ -364,7 +364,7 @@ function App() {
                 Algorithms
               </MenuButton>
               <MenuList>
-                <MenuItem onClick={() => handleAlgorithmSelect('Nearest Neighbor-Normal')}>
+                <MenuItem onClick={() => handleAlgorithmSelect('Nearest Neighbor-Recursion')}>
                   Nearest Neighbor-Normal
                 </MenuItem>
                 <MenuItem onClick={() => handleAlgorithmSelect('Nearest Neighbor-Priority Queue')}>
