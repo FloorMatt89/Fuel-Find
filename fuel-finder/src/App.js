@@ -258,8 +258,11 @@ function App() {
       setDirectionsResponse(null)
       setDistance('')
       setDuration('')
+      setAlgorithmTime('')
       originRef.current.value = ''
       destinationRef.current.value = ''
+      currentRangeRef.current.value = ''
+      maxRangeRef.current.value =''
       
   }
 
