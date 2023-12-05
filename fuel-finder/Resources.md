@@ -10,3 +10,7 @@ Google Maps API 3rd Party Extension
 Web Development
 
 [Google Maps Video Tutorial](https://www.youtube.com/watch?v=iP3DnhCUIsE)
+[YT Tutorial Github](https://github.com/trulymittal/google-maps-directions-tutorial)
+
+KD Tree Reference
+[Ubilabs KD Tree JS](https://github.com/ubilabs/kd-tree-javascript)
