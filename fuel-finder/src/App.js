@@ -153,7 +153,7 @@ function App() {
   };
   const getNearestNeighbor = async (point) => {
     return new Promise((resolve) => {
-      // Start measuring time
+     
       
       let nearestNeighbor;
       console.log('Neighbor called');
@@ -166,7 +166,7 @@ function App() {
         nearestNeighbor = kdTree.nearestNeighborWithPriorityQueue(point);
         
       }
-      // Resolve with both the nearestNeighbor and the measured time
+      
       resolve({ nearestNeighbor});
     });
   };
@@ -200,10 +200,10 @@ function App() {
               location: point,
               stopover: true,
             });
-            // Recursively calculate the next segment
+            
             calculateSegment(point, end, waypoints, initialStart, maxRange, maxRange, false);
           } else {
-            // No more points at 300 miles, display the final route
+            
             displayRoute(initialStart, end, waypoints);
           }
         } else {
